@@ -1,5 +1,6 @@
 # Import
 import tkinter as tk
+import move
 
 # position d'origine du joueur
 pos_x = 1
@@ -7,8 +8,8 @@ pos_y = 1
 victory = False
 
 # Le labyrinth
-line0 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "■", "■"]
-line1 = ["■", "▢", "▢", "▢", "■", "▢", "▢", "▢", "■", "▒", "■"]
+line0 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "▒", "■"]
+line1 = ["■", "▢", "▢", "▢", "■", "▢", "▢", "▢", "■", "▢", "■"]
 line2 = ["■", "▢", "■", "▢", "▢", "▢", "■", "▢", "■", "▢", "■"]
 line3 = ["■", "■", "■", "▢", "■", "▢", "■", "■", "■", "▢", "■"]
 line4 = ["■", "▢", "▢", "▢", "■", "■", "■", "▢", "▢", "▢", "■"]
@@ -22,103 +23,28 @@ line10 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "■", 
 
 # Fonctions
 # Fonction appelée lors du clic sur le bouton
-def move_y(delta_y):
-    global pos_y, victory
-    y_move = False
-    if pos_y + delta_y == 1:
-        if line1[pos_x] == "▢":
-            y_move = True
-        elif line1[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 2:
-        if line2[pos_x] == "▢":
-            y_move = True
-        elif line2[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 3:
-        if line3[pos_x] == "▢":
-            y_move = True
-        elif line3[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 4:
-        if line4[pos_x] == "▢":
-            y_move = True
-        elif line4[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 5:
-        if line5[pos_x] == "▢":
-            y_move = True
-        elif line5[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 6:
-        if line6[pos_x] == "▢":
-            y_move = True
-        elif line6[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 7:
-        if line7[pos_x] == "▢":
-            y_move = True
-        elif line7[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 8:
-        if line8[pos_x] == "▢":
-            y_move = True
-        elif line8[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 9:
-        if line9[pos_x] == "▢":
-            y_move = True
-        elif line9[pos_x] == "▒":
-            victory = True
-    if pos_y + delta_y == 10:
-        if line10[pos_x] == "▢":
-            y_move = True
-        elif line10[pos_x] == "▒":
-            victory = True
-    if y_move:
-        pos_y += delta_y
-
-    update_label()
-
-
-def move_x(delta_x):
+def move_y(y):
     global pos_x, pos_y, victory
-    x_move = False
-    if pos_y == 1:
-        if line1[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 2:
-        if line2[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 3:
-        if line3[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 4:
-        if line4[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 5:
-        if line5[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 6:
-        if line6[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 7:
-        if line7[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 8:
-        if line8[pos_x + delta_x] == "▢":
-            x_move = True
-    if pos_y == 9:
-        if line9[pos_x + delta_x] == "▢":
-            x_move = True
-
-    if x_move:
-        pos_x += delta_x
-
+    actual_x = pos_x
+    actual_y = pos_y
+    result_move_y = move.move_y(y, actual_x, actual_y, line0, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, victory)
+    pos_y = result_move_y[0]
+    victory = result_move_y[1]
     update_label()
+
+def move_x(x):
+    global pos_x, pos_y, victory
+    actual_x = pos_x
+    actual_y = pos_y
+    result_move_x = move.move_x(x, actual_x, actual_y, line0, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, victory)
+    pos_x = result_move_x[0]
+    victory = result_move_x[1]
+    update_label()
+
 
 def view():
     global pos_x, pos_y, victory
+    player_view =""
     if pos_y == 1:
         player_view = f"{line0[pos_x - 1]}{line0[pos_x]}{line0[pos_x + 1]}\n{line1[pos_x - 1]}◉{line1[pos_x + 1]}\n{line2[pos_x - 1]}{line2[pos_x]}{line2[pos_x + 1]}\n"
     if pos_y == 2:
