@@ -1,6 +1,6 @@
 # Import
 import tkinter as tk
-import move
+import movement
 
 # position d'origine du joueur
 pos_x = 1
@@ -23,22 +23,14 @@ line10 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "■", 
 
 # Fonctions
 # Fonction appelée lors du clic sur le bouton
-def move_y(y):
+def move(x, y):
     global pos_x, pos_y, victory
     actual_x = pos_x
     actual_y = pos_y
-    result_move_y = move.move_y(y, actual_x, actual_y, line0, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, victory)
-    pos_y = result_move_y[0]
-    victory = result_move_y[1]
-    update_label()
-
-def move_x(x):
-    global pos_x, pos_y, victory
-    actual_x = pos_x
-    actual_y = pos_y
-    result_move_x = move.move_x(x, actual_x, actual_y, line0, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, victory)
-    pos_x = result_move_x[0]
-    victory = result_move_x[1]
+    result_move = movement.move2(x, y, actual_x, actual_y, line0, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, victory)
+    pos_y = result_move[1]
+    pos_x = result_move[0]
+    victory = result_move[2]
     update_label()
 
 
@@ -85,16 +77,16 @@ label.grid(row=1, column=1)
 
 # boutons
 # Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_up lorsqu'il est pressé
-button = tk.Button(root, text="▲", command=lambda: move_y(-1), width=10, height=2)
+button = tk.Button(root, text="▲", command=lambda: move(0, -1), width=10, height=2)
 button.grid(row=0, column=1)
 # Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_down lorsqu'il est pressé
-button = tk.Button(root, text="▼", command=lambda: move_y(1), width=10, height=2)
+button = tk.Button(root, text="▼", command=lambda: move(0, 1), width=10, height=2)
 button.grid(row=2, column=1)
 # Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_left lorsqu'il est pressé
-button = tk.Button(root, text="◀", command=lambda: move_x(-1), width=5, height=10)
+button = tk.Button(root, text="◀", command=lambda: move(-1, 0), width=5, height=10)
 button.grid(row=1, column=0)
 # Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_right lorsqu'il est pressé
-button = tk.Button(root, text="▶", command=lambda: move_x(1), width=5, height=10)
+button = tk.Button(root, text="▶", command=lambda: move(1, 0), width=5, height=10)
 button.grid(row=1, column=2)
 
 
