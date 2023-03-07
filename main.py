@@ -1,10 +1,13 @@
 # Import
 import tkinter as tk
 import player
-
+import labyrinthe
 
 # instanciation du joueur
 avatar = player.Player()
+
+# instanciation du labyrinthe
+laby = labyrinthe.Labyrinthe()
 
 # Le labyrinth
 line0 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "▒", "■"]
@@ -23,48 +26,27 @@ line10 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "■", 
 # Fonctions
 # Fonction appelée lors du clic sur le bouton
 def move(x, y):
-    avatar.move2(x, y, line0, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10)
+    avatar.move2(x, y, laby)
     update_label()
 
 
 def view():
     player_view = ""
-    if avatar.pos_y == 1:
-        player_view = f'''{line0[avatar.pos_x - 1]}{line0[avatar.pos_x]}{line0[avatar.pos_x + 1]}
-{line1[avatar.pos_x - 1]}◉{line1[avatar.pos_x + 1]}
-{line2[avatar.pos_x - 1]}{line2[avatar.pos_x]}{line2[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 2:
-        player_view = f'''{line1[avatar.pos_x - 1]}{line1[avatar.pos_x]}{line1[avatar.pos_x + 1]}
-{line2[avatar.pos_x - 1]}◉{line2[avatar.pos_x + 1]}
-{line3[avatar.pos_x - 1]}{line3[avatar.pos_x]}{line3[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 3:
-        player_view = f'''{line2[avatar.pos_x - 1]}{line2[avatar.pos_x]}{line2[avatar.pos_x + 1]}
-{line3[avatar.pos_x - 1]}◉{line3[avatar.pos_x + 1]}
-{line4[avatar.pos_x - 1]}{line4[avatar.pos_x]}{line4[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 4:
-        player_view = f'''{line3[avatar.pos_x - 1]}{line3[avatar.pos_x]}{line3[avatar.pos_x + 1]}
-{line4[avatar.pos_x - 1]}◉{line4[avatar.pos_x + 1]}
-{line5[avatar.pos_x - 1]}{line5[avatar.pos_x]}{line5[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 5:
-        player_view = f'''{line4[avatar.pos_x - 1]}{line4[avatar.pos_x]}{line4[avatar.pos_x + 1]}
-{line5[avatar.pos_x - 1]}◉{line5[avatar.pos_x + 1]}
-{line6[avatar.pos_x - 1]}{line6[avatar.pos_x]}{line6[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 6:
-        player_view = f'''{line5[avatar.pos_x - 1]}{line5[avatar.pos_x]}{line5[avatar.pos_x + 1]}
-{line6[avatar.pos_x - 1]}◉{line6[avatar.pos_x + 1]}
-{line7[avatar.pos_x - 1]}{line7[avatar.pos_x]}{line7[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 7:
-        player_view = f'''{line6[avatar.pos_x - 1]}{line6[avatar.pos_x]}{line6[avatar.pos_x + 1]}
-{line7[avatar.pos_x - 1]}◉{line7[avatar.pos_x + 1]}
-{line8[avatar.pos_x - 1]}{line8[avatar.pos_x]}{line8[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 8:
-        player_view = f'''{line7[avatar.pos_x - 1]}{line7[avatar.pos_x]}{line7[avatar.pos_x + 1]}
-{line8[avatar.pos_x - 1]}◉{line8[avatar.pos_x + 1]}
-{line9[avatar.pos_x - 1]}{line9[avatar.pos_x]}{line9[avatar.pos_x + 1]}'''
-    if avatar.pos_y == 9:
-        player_view = f'''{line8[avatar.pos_x - 1]}{line8[avatar.pos_x]}{line8[avatar.pos_x + 1]}
-{line9[avatar.pos_x - 1]}◉{line9[avatar.pos_x + 1]}
-{line10[avatar.pos_x - 1]}{line10[avatar.pos_x]}{line10[avatar.pos_x + 1]}'''
+    #player_line = laby.structure[avatar.pos_y]
+    cam_y = -2
+    cam_x = -2
+    for i in range(avatar.pos_y - 1, avatar.pos_y + 2, 1):
+        player_line = laby.structure[i]
+        cam_y += 1
+        cam_x = -2
+        for j in range(avatar.pos_x - 1, avatar.pos_x + 2, 1):
+            cam_x += 1
+            print(f"cam_x : {cam_x} / cam_y : {cam_y}")
+            if cam_x == 0 and cam_y == 0:
+                player_view += "☺"
+            else:
+                player_view += player_line[j]
+        player_view += "\n"
     if avatar.victory:
         player_view = "Victoire !"
     return player_view
