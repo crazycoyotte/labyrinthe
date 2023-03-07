@@ -1,7 +1,14 @@
-# Import
-import tkinter as tk
+import pygame
 import player
 import labyrinthe
+
+# Initialisation de Pygame
+pygame.init()
+
+# Création de la fenêtre principale
+window_size = (500, 500)
+screen = pygame.display.set_mode(window_size)
+pygame.display.set_caption("Labyrinthe")
 
 # instanciation du joueur
 avatar = player.Player()
@@ -9,82 +16,65 @@ avatar = player.Player()
 # instanciation du labyrinthe
 laby = labyrinthe.Labyrinthe()
 
-# Le labyrinth
-line0 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "▒", "■"]
-line1 = ["■", "▢", "▢", "▢", "■", "▢", "▢", "▢", "■", "▢", "■"]
-line2 = ["■", "▢", "■", "▢", "▢", "▢", "■", "▢", "■", "▢", "■"]
-line3 = ["■", "■", "■", "▢", "■", "▢", "■", "■", "■", "▢", "■"]
-line4 = ["■", "▢", "▢", "▢", "■", "■", "■", "▢", "▢", "▢", "■"]
-line5 = ["■", "▢", "■", "■", "■", "■", "■", "▢", "■", "■", "■"]
-line6 = ["■", "▢", "■", "▢", "▢", "▢", "■", "▢", "■", "▢", "■"]
-line7 = ["■", "▢", "▢", "▢", "■", "▢", "▢", "▢", "■", "▢", "■"]
-line8 = ["■", "▢", "■", "■", "■", "▢", "■", "▢", "▢", "▢", "■"]
-line9 = ["■", "▢", "▢", "■", "▢", "▢", "■", "▢", "■", "▢", "■"]
-line10 = ["■", "■", "■", "■", "■", "■", "■", "■", "■", "■", "■"]
+# Couleurs
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Polices de caractères
+font = pygame.font.SysFont(None, 40)
 
 
-# Fonctions
-# Fonction appelée lors du clic sur le bouton
+def draw_text(text, color, x, y):
+    text_surface = font.render(text, True, color)
+    screen.blit(text_surface, (x, y))
+
+
+def draw_labyrinthe(laby, avatar):
+    # Affichage du labyrinthe
+
+    print_row = -1
+    for row in range(avatar.pos_y - 1, avatar.pos_y + 2, 1):
+        player_line = laby.structure[avatar.pos_y + print_row]
+        print_row += 1
+        print_col = 0
+        for col in range(avatar.pos_x - 1, avatar.pos_x + 2, 1):
+            print_col += 1
+            if print_row == 1 and print_col == 2:
+                draw_text("☺", BLACK, col * 50 + 20, row * 50 + 10)
+            elif player_line[col] == "■":
+                pygame.draw.rect(screen, BLACK, (col * 50, row * 50, 50, 50))
+            elif player_line[col] == "▢":
+                pygame.draw.rect(screen, WHITE, (col * 50, row * 50, 50, 50))
+
+
 def move(x, y):
     avatar.move2(x, y, laby)
-    update_label()
 
 
-def view():
-    player_view = ""
-    #player_line = laby.structure[avatar.pos_y]
-    cam_y = -2
-    cam_x = -2
-    for i in range(avatar.pos_y - 1, avatar.pos_y + 2, 1):
-        player_line = laby.structure[i]
-        cam_y += 1
-        cam_x = -2
-        for j in range(avatar.pos_x - 1, avatar.pos_x + 2, 1):
-            cam_x += 1
-            print(f"cam_x : {cam_x} / cam_y : {cam_y}")
-            if cam_x == 0 and cam_y == 0:
-                player_view += "☺"
-            else:
-                player_view += player_line[j]
-        player_view += "\n"
-    if avatar.victory:
-        player_view = "Victoire !"
-    return player_view
+# Boucle de jeu
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                move(0, -1)
+            elif event.key == pygame.K_DOWN:
+                move(0, 1)
+            elif event.key == pygame.K_LEFT:
+                move(-1, 0)
+            elif event.key == pygame.K_RIGHT:
+                move(1, 0)
 
+    # Effacement de l'écran
+    screen.fill(WHITE)
 
-def update_label():
-    # Fonction appelée lorsque le bouton est pressé
-    text = view()  # Appel de la fonction "view()" pour récupérer le texte généré
-    label.configure(text=text, font=("Arial", 18))  # Mise à jour du texte affiché dans le widget "label"
+    # Affichage du labyrinthe
+    draw_labyrinthe(laby, avatar)
 
+    # Mise à jour de l'affichage
+    pygame.display.flip()
 
-# Création de la fenêtre principale
-root = tk.Tk()
-
-# affichage
-# Ajout d'un widget Label contenant le texte "Texte d'origine" à la fenêtre
-lab_view = view()
-label = tk.Label(root, text=lab_view, font=("Arial", 18))
-label.grid(row=1, column=1)
-
-# boutons
-# Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_up lorsqu'il est pressé
-button = tk.Button(root, text="▲", command=lambda: move(0, -1), width=3, height=2)
-button.grid(row=0, column=1)
-# Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_down lorsqu'il est pressé
-button = tk.Button(root, text="▼", command=lambda: move(0, 1), width=3, height=2)
-button.grid(row=2, column=1)
-# Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_left lorsqu'il est pressé
-button = tk.Button(root, text="◀", command=lambda: move(-1, 0), width=2, height=3)
-button.grid(row=1, column=0)
-# Ajout d'un widget Bouton à la fenêtre, qui appelle la fonction go_right lorsqu'il est pressé
-button = tk.Button(root, text="▶", command=lambda: move(1, 0), width=2, height=3)
-button.grid(row=1, column=2)
-
-
-# Définition de la taille et de la position de la fenêtre
-# geometry("largeur x hauteur+x+y")
-root.geometry("100x175+100+50")
-
-# Boucle principale pour afficher la fenêtre
-root.mainloop()
+# Fermeture de Pygame
+pygame.quit()
