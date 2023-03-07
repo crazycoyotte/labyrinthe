@@ -6,7 +6,7 @@ import labyrinthe
 pygame.init()
 
 # Création de la fenêtre principale
-window_size = (500, 500)
+window_size = (800, 600)
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Labyrinthe")
 
@@ -19,6 +19,7 @@ laby = labyrinthe.Labyrinthe()
 # Couleurs
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
 
 # Polices de caractères
 font = pygame.font.SysFont(None, 40)
@@ -45,6 +46,8 @@ def draw_labyrinthe(laby, avatar):
                 pygame.draw.rect(screen, BLACK, (col * 50, row * 50, 50, 50))
             elif player_line[col] == "▢":
                 pygame.draw.rect(screen, WHITE, (col * 50, row * 50, 50, 50))
+            elif player_line[col] == "▒":
+                pygame.draw.rect(screen, GREEN, (col * 50, row * 50, 50, 50))
 
 
 def move(x, y):
