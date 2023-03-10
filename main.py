@@ -2,6 +2,9 @@ import pygame
 import player
 import labyrinthe
 
+# declaration variables
+delta_x_y = [1, 0]
+
 # Initialisation de Pygame
 pygame.init()
 
@@ -9,6 +12,11 @@ pygame.init()
 window_size = (800, 600)
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Labyrinthe")
+
+# Define click zone
+turn_left_zone = pygame.Rect(0, 0, 200, 600)
+turn_right_zone = pygame.Rect(600, 0, 200, 600)
+go_straight_zone = pygame.Rect(200, 0, 400, 600)
 
 # instanciation du joueur
 avatar = player.Player()
@@ -33,51 +41,143 @@ def draw_text(text, color, x, y):
 def draw_labyrinthe(laby, avatar):
     # Affichage du labyrinthe
 
-    print_row = -1
-    for row in range(avatar.pos_y - 1, avatar.pos_y + 2, 1):
-        player_line = laby.structure[avatar.pos_y + print_row]
-        print_row += 1
-        print_col = 0
-        for col in range(avatar.pos_x - 1, avatar.pos_x + 2, 1):
-            print_col += 1
-            if print_row == 1 and print_col == 2:
-                draw_text("☺", BLACK, col * 50 + 20, row * 50 + 10)
-            elif player_line[col] == "■":
-                pygame.draw.rect(screen, BLACK, (col * 50, row * 50, 50, 50))
-            elif player_line[col] == "▢":
-                pygame.draw.rect(screen, WHITE, (col * 50, row * 50, 50, 50))
-            elif player_line[col] == "▒":
-                pygame.draw.rect(screen, GREEN, (col * 50, row * 50, 50, 50))
+    '''if avatar.victory:
+        victoire_img = pygame.image.load("img/victoire.jpg")
+        screen.blit(victoire_img, (0, 0))
+    else:
+        print_row = -1
+        for row in range(avatar.pos_y - 1, avatar.pos_y + 2, 1):
+            player_line = laby.structure[avatar.pos_y + print_row]
+            print_row += 1
+            print_col = 0
+            for col in range(avatar.pos_x - 1, avatar.pos_x + 2, 1):
+               print_col += 1
+               if print_row == 1 and print_col == 2:
+                   draw_text("☺", BLACK, col * 50 + 20, row * 50 + 10)
+               elif player_line[col] == "0":
+                   pygame.draw.rect(screen, BLACK, (col * 50, row * 50, 50, 50))
+               elif player_line[col] == "1":
+                   pygame.draw.rect(screen, WHITE, (col * 50, row * 50, 50, 50))
+               elif player_line[col] == "2":
+                   pygame.draw.rect(screen, GREEN, (col * 50, row * 50, 50, 50))'''
+    global delta_x_y
+
+    picture = ""
+    if avatar.victory:
+        victoire_img = pygame.image.load("img/victoire.jpg")
+        screen.blit(victoire_img, (0, 0))
+    else:
+        actual_line_0 = laby.structure[avatar.pos_y]
+        actual_line_m_1 = laby.structure[avatar.pos_y + delta_x_y[1]]
+        actual_line_m_2 = laby.structure[avatar.pos_y + 2 * delta_x_y[1]]
+        if delta_x_y == [0, -1]:
+            if actual_line_m_1[avatar.pos_x] == "1":
+                picture = "".join(["img/", actual_line_0[avatar.pos_x - 1],
+                                   actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x + 1], ".jpg"])
+            elif actual_line_m_1[avatar.pos_x] == "0":
+                picture = "".join(["img/", actual_line_0[avatar.pos_x - 1], actual_line_m_1[avatar.pos_x - 1],
+                                   actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x + 1],
+                                   actual_line_0[avatar.pos_x + 1], ".jpg"])
+        elif delta_x_y == [0, 1]:
+            if actual_line_m_1[avatar.pos_x] == "1":
+                picture = "".join(["img/", actual_line_0[avatar.pos_x + 1],
+                                   actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x - 1], ".jpg"])
+            elif actual_line_m_1[avatar.pos_x] == "0":
+                picture = "".join(["img/", actual_line_0[avatar.pos_x + 1], actual_line_m_1[avatar.pos_x + 1],
+                                   actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x - 1],
+                                   actual_line_0[avatar.pos_x - 1], ".jpg"])
+
+        else:
+            actual_line_m_1 = laby.structure[avatar.pos_y - 1]
+            actual_line_0 = laby.structure[avatar.pos_y]
+            actual_line_p_1 = laby.structure[avatar.pos_y + 1]
+            if delta_x_y == [1, 0]:
+                if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1":
+                    picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
+                                       actual_line_0[avatar.pos_x + delta_x_y[0]],
+                                       actual_line_p_1[avatar.pos_x], ".jpg"])
+                elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
+                    picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
+                                       actual_line_m_1[avatar.pos_x + delta_x_y[0]],
+                                       actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
+                                       actual_line_p_1[avatar.pos_x + delta_x_y[0]],
+                                       actual_line_p_1[avatar.pos_x], ".jpg"])
+            elif delta_x_y == [-1, 0]:
+                if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1":
+                    picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
+                                       actual_line_0[avatar.pos_x + delta_x_y[0]],
+                                       actual_line_m_1[avatar.pos_x], ".jpg"])
+                elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
+                    picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
+                                       actual_line_p_1[avatar.pos_x + delta_x_y[0]],
+                                       actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
+                                       actual_line_m_1[avatar.pos_x + delta_x_y[0]],
+                                       actual_line_m_1[avatar.pos_x], ".jpg"])
+    print(f"{avatar.pos_x} {avatar.pos_y} / {delta_x_y[0]}, {delta_x_y[1]}")
+    picture_img = pygame.image.load(picture)
+    screen.blit(picture_img, (0, 0))
+    ombrage = pygame.image.load("img/ombrage.png")
+    screen.blit(ombrage, (0, 0))
 
 
-def move(x, y):
-    avatar.move2(x, y, laby)
+def move(delta_x_y):
+    avatar.move2(delta_x_y[0], delta_x_y[1], laby)
 
 
 # Boucle de jeu
 running = True
+# Effacement de l'écran
+screen.fill(WHITE)
+
+# Affichage du labyrinthe
+draw_labyrinthe(laby, avatar)
+
+# Mise à jour de l'affichage
+pygame.display.flip()
+draw_labyrinthe(laby, avatar)
+left_click_pressed = False
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                move(0, -1)
-            elif event.key == pygame.K_DOWN:
-                move(0, 1)
-            elif event.key == pygame.K_LEFT:
-                move(-1, 0)
-            elif event.key == pygame.K_RIGHT:
-                move(1, 0)
+        # Get mouse coordonates
+        mouse_x, mouse_y = pygame.mouse.get_pos()
 
-    # Effacement de l'écran
-    screen.fill(WHITE)
+        # Get left click
+        left_click, middle_click, right_click = pygame.mouse.get_pressed()
+        if left_click and left_click_pressed == False:
+            if go_straight_zone.collidepoint(mouse_x, mouse_y):
+                move(delta_x_y)
+            if turn_left_zone.collidepoint(mouse_x, mouse_y):
+                if delta_x_y == [1, 0]:
+                    delta_x_y = [0, -1]
+                elif delta_x_y == [0, -1]:
+                    delta_x_y = [-1, 0]
+                elif delta_x_y == [-1, 0]:
+                    delta_x_y = [0, 1]
+                elif delta_x_y == [0, 1]:
+                    delta_x_y = [1, 0]
+            if turn_right_zone.collidepoint(mouse_x, mouse_y) and left_click:
+                if delta_x_y == [1, 0]:
+                    delta_x_y = [0, 1]
+                elif delta_x_y == [0, 1]:
+                    delta_x_y = [-1, 0]
+                elif delta_x_y == [-1, 0]:
+                    delta_x_y = [0, -1]
+                elif delta_x_y == [0, -1]:
+                    delta_x_y = [1, 0]
+            left_click_pressed = True
+        else:
+            left_click_pressed = False
 
-    # Affichage du labyrinthe
-    draw_labyrinthe(laby, avatar)
+            # Effacement de l'écran
+            screen.fill(WHITE)
 
-    # Mise à jour de l'affichage
-    pygame.display.flip()
+            # Affichage du labyrinthe
+            draw_labyrinthe(laby, avatar)
+
+            # Mise à jour de l'affichage
+            pygame.display.flip()
 
 # Fermeture de Pygame
 pygame.quit()
