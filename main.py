@@ -41,84 +41,65 @@ def draw_text(text, color, x, y):
 def draw_labyrinthe(laby, avatar):
     # Affichage du labyrinthe
 
-    '''if avatar.victory:
-        victoire_img = pygame.image.load("img/victoire.jpg")
-        screen.blit(victoire_img, (0, 0))
-    else:
-        print_row = -1
-        for row in range(avatar.pos_y - 1, avatar.pos_y + 2, 1):
-            player_line = laby.structure[avatar.pos_y + print_row]
-            print_row += 1
-            print_col = 0
-            for col in range(avatar.pos_x - 1, avatar.pos_x + 2, 1):
-               print_col += 1
-               if print_row == 1 and print_col == 2:
-                   draw_text("☺", BLACK, col * 50 + 20, row * 50 + 10)
-               elif player_line[col] == "0":
-                   pygame.draw.rect(screen, BLACK, (col * 50, row * 50, 50, 50))
-               elif player_line[col] == "1":
-                   pygame.draw.rect(screen, WHITE, (col * 50, row * 50, 50, 50))
-               elif player_line[col] == "2":
-                   pygame.draw.rect(screen, GREEN, (col * 50, row * 50, 50, 50))'''
+
     global delta_x_y
 
     picture = ""
-    if avatar.victory:
-        victoire_img = pygame.image.load("img/victoire.jpg")
-        screen.blit(victoire_img, (0, 0))
-    else:
-        actual_line_0 = laby.structure[avatar.pos_y]
-        actual_line_m_1 = laby.structure[avatar.pos_y + delta_x_y[1]]
-        actual_line_m_2 = laby.structure[avatar.pos_y + 2 * delta_x_y[1]]
-        if delta_x_y == [0, -1]:
-            if actual_line_m_1[avatar.pos_x] == "1":
-                picture = "".join(["img/", actual_line_0[avatar.pos_x - 1],
-                                   actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x + 1], ".jpg"])
-            elif actual_line_m_1[avatar.pos_x] == "0":
-                picture = "".join(["img/", actual_line_0[avatar.pos_x - 1], actual_line_m_1[avatar.pos_x - 1],
-                                   actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x + 1],
-                                   actual_line_0[avatar.pos_x + 1], ".jpg"])
-        elif delta_x_y == [0, 1]:
-            if actual_line_m_1[avatar.pos_x] == "1":
-                picture = "".join(["img/", actual_line_0[avatar.pos_x + 1],
-                                   actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x - 1], ".jpg"])
-            elif actual_line_m_1[avatar.pos_x] == "0":
-                picture = "".join(["img/", actual_line_0[avatar.pos_x + 1], actual_line_m_1[avatar.pos_x + 1],
-                                   actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x - 1],
-                                   actual_line_0[avatar.pos_x - 1], ".jpg"])
+    actual_line_0 = laby.structure[avatar.pos_y]
+    actual_line_m_1 = laby.structure[avatar.pos_y + delta_x_y[1]]
+    actual_line_m_2 = laby.structure[avatar.pos_y + 2 * delta_x_y[1]]
+    if delta_x_y == [0, -1]:
+        if actual_line_m_1[avatar.pos_x] == "1" or actual_line_m_1[avatar.pos_x] == "2":
+            picture = "".join(["img/", actual_line_0[avatar.pos_x - 1],
+                               actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x + 1], ".jpg"])
+        elif actual_line_m_1[avatar.pos_x] == "0":
+            picture = "".join(["img/", actual_line_0[avatar.pos_x - 1], actual_line_m_1[avatar.pos_x - 1],
+                               actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x + 1],
+                               actual_line_0[avatar.pos_x + 1], ".jpg"])
+    elif delta_x_y == [0, 1]:
+        if actual_line_m_1[avatar.pos_x] == "1" or actual_line_m_1[avatar.pos_x] == "2":
+            picture = "".join(["img/", actual_line_0[avatar.pos_x + 1],
+                               actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x - 1], ".jpg"])
+        elif actual_line_m_1[avatar.pos_x] == "0":
+            picture = "".join(["img/", actual_line_0[avatar.pos_x + 1], actual_line_m_1[avatar.pos_x + 1],
+                               actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x - 1],
+                               actual_line_0[avatar.pos_x - 1], ".jpg"])
 
-        else:
-            actual_line_m_1 = laby.structure[avatar.pos_y - 1]
-            actual_line_0 = laby.structure[avatar.pos_y]
-            actual_line_p_1 = laby.structure[avatar.pos_y + 1]
-            if delta_x_y == [1, 0]:
-                if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1":
-                    picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
-                                       actual_line_0[avatar.pos_x + delta_x_y[0]],
-                                       actual_line_p_1[avatar.pos_x], ".jpg"])
-                elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
-                    picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
-                                       actual_line_m_1[avatar.pos_x + delta_x_y[0]],
-                                       actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
-                                       actual_line_p_1[avatar.pos_x + delta_x_y[0]],
-                                       actual_line_p_1[avatar.pos_x], ".jpg"])
-            elif delta_x_y == [-1, 0]:
-                if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1":
-                    picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
-                                       actual_line_0[avatar.pos_x + delta_x_y[0]],
-                                       actual_line_m_1[avatar.pos_x], ".jpg"])
-                elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
-                    picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
-                                       actual_line_p_1[avatar.pos_x + delta_x_y[0]],
-                                       actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
-                                       actual_line_m_1[avatar.pos_x + delta_x_y[0]],
-                                       actual_line_m_1[avatar.pos_x], ".jpg"])
+    else:
+        actual_line_m_1 = laby.structure[avatar.pos_y - 1]
+        actual_line_0 = laby.structure[avatar.pos_y]
+        actual_line_p_1 = laby.structure[avatar.pos_y + 1]
+        if delta_x_y == [1, 0]:
+            if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1" or actual_line_0[avatar.pos_x + delta_x_y[0]] == "2" :
+                picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
+                                   actual_line_0[avatar.pos_x + delta_x_y[0]],
+                                   actual_line_p_1[avatar.pos_x], ".jpg"])
+            elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
+                picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
+                                   actual_line_m_1[avatar.pos_x + delta_x_y[0]],
+                                   actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
+                                   actual_line_p_1[avatar.pos_x + delta_x_y[0]],
+                                   actual_line_p_1[avatar.pos_x], ".jpg"])
+        elif delta_x_y == [-1, 0]:
+            if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1" or actual_line_0[avatar.pos_x + delta_x_y[0]] == "2" :
+                picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
+                                   actual_line_0[avatar.pos_x + delta_x_y[0]],
+                                   actual_line_m_1[avatar.pos_x], ".jpg"])
+            elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
+                picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
+                                   actual_line_p_1[avatar.pos_x + delta_x_y[0]],
+                                   actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
+                                   actual_line_m_1[avatar.pos_x + delta_x_y[0]],
+                                   actual_line_m_1[avatar.pos_x], ".jpg"])
     print(f"{avatar.pos_x} {avatar.pos_y} / {delta_x_y[0]}, {delta_x_y[1]}")
     picture_img = pygame.image.load(picture)
     screen.blit(picture_img, (0, 0))
     ombrage = pygame.image.load("img/ombrage.png")
     screen.blit(ombrage, (0, 0))
-
+    if avatar.victory:
+        victoire_img = pygame.image.load("img/victoire.jpg")
+        victoire_redim = pygame.transform.scale(victoire_img, (800, 600))
+        screen.blit(victoire_redim, (0, 0))
 
 def move(delta_x_y):
     avatar.move2(delta_x_y[0], delta_x_y[1], laby)
