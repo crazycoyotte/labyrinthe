@@ -96,6 +96,7 @@ def draw_labyrinthe(laby, avatar):
     screen.blit(picture_img, (0, 0))
     ombrage = pygame.image.load("img/ombrage.png")
     screen.blit(ombrage, (0, 0))
+
     if avatar.victory:
         victoire_img = pygame.image.load("img/victoire.jpg")
         victoire_redim = pygame.transform.scale(victoire_img, (800, 600))
@@ -103,6 +104,8 @@ def draw_labyrinthe(laby, avatar):
 
 def move(delta_x_y):
     avatar.move2(delta_x_y[0], delta_x_y[1], laby)
+    pygame.mixer.music.load('sfx/footsteps.mp3')
+    pygame.mixer.music.play()
 
 
 # Boucle de jeu
