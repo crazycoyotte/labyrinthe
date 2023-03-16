@@ -40,67 +40,143 @@ def draw_text(text, color, x, y):
 
 def draw_labyrinthe(laby, avatar):
     # Affichage du labyrinthe
-
-
     global delta_x_y
-
-    picture = ""
     actual_line_0 = laby.structure[avatar.pos_y]
     actual_line_m_1 = laby.structure[avatar.pos_y + delta_x_y[1]]
     actual_line_m_2 = laby.structure[avatar.pos_y + 2 * delta_x_y[1]]
-    if delta_x_y == [0, -1]:
-        if actual_line_m_1[avatar.pos_x] == "1" or actual_line_m_1[avatar.pos_x] == "2":
-            picture = "".join(["img/", actual_line_0[avatar.pos_x - 1],
-                               actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x + 1], ".jpg"])
-        elif actual_line_m_1[avatar.pos_x] == "0":
-            picture = "".join(["img/", actual_line_0[avatar.pos_x - 1], actual_line_m_1[avatar.pos_x - 1],
-                               actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x + 1],
-                               actual_line_0[avatar.pos_x + 1], ".jpg"])
-    elif delta_x_y == [0, 1]:
-        if actual_line_m_1[avatar.pos_x] == "1" or actual_line_m_1[avatar.pos_x] == "2":
-            picture = "".join(["img/", actual_line_0[avatar.pos_x + 1],
-                               actual_line_m_1[avatar.pos_x], actual_line_0[avatar.pos_x - 1], ".jpg"])
-        elif actual_line_m_1[avatar.pos_x] == "0":
-            picture = "".join(["img/", actual_line_0[avatar.pos_x + 1], actual_line_m_1[avatar.pos_x + 1],
-                               actual_line_m_2[avatar.pos_x], actual_line_m_1[avatar.pos_x - 1],
-                               actual_line_0[avatar.pos_x - 1], ".jpg"])
+    actual_line_p_1 = laby.structure[avatar.pos_y + 1]
 
-    else:
-        actual_line_m_1 = laby.structure[avatar.pos_y - 1]
-        actual_line_0 = laby.structure[avatar.pos_y]
-        actual_line_p_1 = laby.structure[avatar.pos_y + 1]
-        if delta_x_y == [1, 0]:
-            if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1" or actual_line_0[avatar.pos_x + delta_x_y[0]] == "2" :
-                picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
-                                   actual_line_0[avatar.pos_x + delta_x_y[0]],
-                                   actual_line_p_1[avatar.pos_x], ".jpg"])
-            elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
-                picture = "".join(["img/", actual_line_m_1[avatar.pos_x],
-                                   actual_line_m_1[avatar.pos_x + delta_x_y[0]],
-                                   actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
-                                   actual_line_p_1[avatar.pos_x + delta_x_y[0]],
-                                   actual_line_p_1[avatar.pos_x], ".jpg"])
-        elif delta_x_y == [-1, 0]:
-            if actual_line_0[avatar.pos_x + delta_x_y[0]] == "1" or actual_line_0[avatar.pos_x + delta_x_y[0]] == "2" :
-                picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
-                                   actual_line_0[avatar.pos_x + delta_x_y[0]],
-                                   actual_line_m_1[avatar.pos_x], ".jpg"])
-            elif actual_line_0[avatar.pos_x + delta_x_y[0]] == "0":
-                picture = "".join(["img/", actual_line_p_1[avatar.pos_x],
-                                   actual_line_p_1[avatar.pos_x + delta_x_y[0]],
-                                   actual_line_0[avatar.pos_x + 2 * delta_x_y[0]],
-                                   actual_line_m_1[avatar.pos_x + delta_x_y[0]],
-                                   actual_line_m_1[avatar.pos_x], ".jpg"])
-    print(f"{avatar.pos_x} {avatar.pos_y} / {delta_x_y[0]}, {delta_x_y[1]}")
-    picture_img = pygame.image.load(picture)
-    screen.blit(picture_img, (0, 0))
-    ombrage = pygame.image.load("img/ombrage.png")
-    screen.blit(ombrage, (0, 0))
+    picture = pygame.image.load("img/base.png")
+    screen.blit(picture, (0, 0))
+
+    if delta_x_y == [0, 1]:
+        for i in range(1, 3, 1):
+            if actual_line_m_2[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-3m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x + 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-2g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x - 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-2d.png")
+                screen.blit(picture, (0, 0))
+            picture = pygame.image.load("img/ombrage2.png.")
+            screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-2m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x + 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-1g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x - 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-1d.png")
+                screen.blit(picture, (0, 0))
+        picture = pygame.image.load("img/ombrage1.png")
+        screen.blit(picture, (0, 0))
+
+    if delta_x_y == [0, -1]:
+        for i in range(1, 3, 1):
+            if actual_line_m_2[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-3m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x - 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-2g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x + 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-2d.png")
+                screen.blit(picture, (0, 0))
+            picture = pygame.image.load("img/ombrage2.png.")
+            screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-2m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x - 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-1g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x + 1] == str(i):
+                picture = pygame.image.load(f"img/{i}-1d.png")
+                screen.blit(picture, (0, 0))
+        picture = pygame.image.load("img/ombrage1.png")
+        screen.blit(picture, (0, 0))
+
+    actual_line_m_1 = laby.structure[avatar.pos_y - 1]
+    actual_line_0 = laby.structure[avatar.pos_y]
+    actual_line_p_1 = laby.structure[avatar.pos_y + 1]
+    if delta_x_y == [1, 0]:
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x + 2 * delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-3m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x + delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-2g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_p_1[avatar.pos_x + delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-2d.png")
+                screen.blit(picture, (0, 0))
+            picture = pygame.image.load("img/ombrage2.png")
+            screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x + delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-2m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-1g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_p_1[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-1d.png")
+                screen.blit(picture, (0, 0))
+        picture = pygame.image.load("img/ombrage1.png")
+        screen.blit(picture, (0, 0))
+
+    if delta_x_y == [-1, 0]:
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x + 2 * delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-3m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_p_1[avatar.pos_x + delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-2g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x + delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-2d.png")
+                screen.blit(picture, (0, 0))
+            picture = pygame.image.load("img/ombrage2.png")
+            screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_0[avatar.pos_x + delta_x_y[0]] == str(i):
+                picture = pygame.image.load(f"img/{i}-2m.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_p_1[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-1g.png")
+                screen.blit(picture, (0, 0))
+        for i in range(1, 3, 1):
+            if actual_line_m_1[avatar.pos_x] == str(i):
+                picture = pygame.image.load(f"img/{i}-1d.png")
+                screen.blit(picture, (0, 0))
+        picture = pygame.image.load(f"img/ombrage1.png")
+        screen.blit(picture, (0, 0))
 
     if avatar.victory:
         victoire_img = pygame.image.load("img/victoire.jpg")
         victoire_redim = pygame.transform.scale(victoire_img, (800, 600))
         screen.blit(victoire_redim, (0, 0))
+
 
 def move(delta_x_y):
     avatar.move2(delta_x_y[0], delta_x_y[1], laby)

@@ -2,8 +2,8 @@
 class Player:
 
     def __init__(self):
-        self.pos_x = 1
-        self.pos_y = 1
+        self.pos_x = 2
+        self.pos_y = 2
         self.victory = False
 
     def move2(self, delta_x, delta_y, laby):
