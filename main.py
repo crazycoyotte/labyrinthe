@@ -77,8 +77,8 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-2g.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage2.png")
-        screen.blit(picture, (0, 0))
+        # picture = pygame.image.load(f"img/ombrage1.png")
+        # screen.blit(picture, (0, 0))
 
         case_p1y_0x = line_p1y[avatar.pos_x]
         for element in case_p1y_0x:
@@ -101,8 +101,6 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-1d.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage.png")
-        screen.blit(picture, (0, 0))
 
     if delta_x_y == [0, -1]:
 
@@ -130,8 +128,8 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-2g.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage2.png")
-        screen.blit(picture, (0, 0))
+        # picture = pygame.image.load(f"img/ombrage1.png")
+        # screen.blit(picture, (0, 0))
 
         case_m1y_0x = line_m1y[avatar.pos_x]
         for element in case_m1y_0x:
@@ -154,8 +152,7 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-1d.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage.png")
-        screen.blit(picture, (0, 0))
+
 
     if delta_x_y == [1, 0]:
 
@@ -183,8 +180,8 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-2d.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage2.png")
-        screen.blit(picture, (0, 0))
+        # picture = pygame.image.load(f"img/ombrage1.png")
+        # screen.blit(picture, (0, 0))
 
         case_0y_p2x = line_0y[avatar.pos_x + delta_x_y[0]]
         for element in case_0y_p2x:
@@ -207,8 +204,6 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-1d.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage.png")
-        screen.blit(picture, (0, 0))
 
     if delta_x_y == [-1, 0]:
 
@@ -236,8 +231,8 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-2g.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage2.png")
-        screen.blit(picture, (0, 0))
+        # picture = pygame.image.load(f"img/ombrage1.png")
+        # screen.blit(picture, (0, 0))
 
         case_0y_p2x = line_0y[avatar.pos_x + delta_x_y[0]]
         for element in case_0y_p2x:
@@ -260,8 +255,8 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-1g.png")
                     screen.blit(picture, (0, 0))
 
-        picture = pygame.image.load(f"img/ombrage.png")
-        screen.blit(picture, (0, 0))
+    picture = pygame.image.load(f"img/ombrage1.png")
+    screen.blit(picture, (0, 0))
 
     if avatar.victory:
         victoire_img = pygame.image.load("img/victoire.jpg")
