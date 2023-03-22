@@ -17,6 +17,7 @@ class Player:
         case_m1y_0x = line_m1y[self.pos_x]
         case_p1y_0x = line_p1y[self.pos_x]
         print(player_line[self.pos_x + delta_x])
+
         if delta_x == 1 and case_0y_p1x[0] == "0":
             move = True
         if delta_x == -1 and case_0y_m1x[0] == "0":
@@ -25,6 +26,8 @@ class Player:
             move = True
         if delta_y == -1 and case_m1y_0x[0] == "0":
             move = True
+        if (delta_x == 1 and case_0y_p1x[1] == "porte") or (delta_x == -1 and case_0y_m1x[1] == "porte") or (delta_y == 1 and case_p1y_0x[1] == "porte") or (delta_y == -1 and case_m1y_0x[1] == "porte"):
+            self.victory = True
         '''if player_line[self.pos_x + delta_x] == "0":
             move = True
         elif player_line[self.pos_x + delta_x] == "2":
