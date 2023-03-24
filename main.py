@@ -37,23 +37,35 @@ font = pygame.font.SysFont(None, 40)
 pygame.mixer.Channel(0).play(pygame.mixer.Sound('sfx/Cave.mp3'))
 
 def draw_text(text, color, x, y):
+    '''TO DO : remove'''
     text_surface = font.render(text, True, color)
     screen.blit(text_surface, (x, y))
 
 
 def draw_labyrinthe(laby, avatar):
+    '''Manage the view
 
-    #global delta_x_y
+    Parameters :
+        laby -> the Labyrinth object
+        avatar -> the player object
+
+    Returns :
+        View of the labyrinth from the players point of view
+    '''
+
+    # Variables
     picture = pygame.image.load("img/base.png")
     picture_redim = pygame.transform.scale(picture, (1600, 900))
     screen.blit(picture_redim, (0, 0))
 
+    # Loading the lines over and above the player
     line_0y = laby.structure[avatar.pos_y]
     line_m1y = laby.structure[avatar.pos_y - 1]
     line_p1y = laby.structure[avatar.pos_y + 1]
     line_m2y = laby.structure[avatar.pos_y - 2]
     line_p2y = laby.structure[avatar.pos_y + 2]
 
+    # If player is looking up
     if delta_x_y == [0, 1]:
 
         case_p2y_0 = line_p2y[avatar.pos_x]
@@ -111,6 +123,7 @@ def draw_labyrinthe(laby, avatar):
                     picture_redim = pygame.transform.scale(picture, (1600, 900))
                     screen.blit(picture_redim, (0, 0))
 
+    # If player is looking down
     if delta_x_y == [0, -1]:
 
         case_m2y_0 = line_m2y[avatar.pos_x]
@@ -168,8 +181,7 @@ def draw_labyrinthe(laby, avatar):
                     picture_redim = pygame.transform.scale(picture, (1600, 900))
                     screen.blit(picture_redim, (0, 0))
 
-
-
+    # If player is looking right
     if delta_x_y == [1, 0]:
 
         case_0y_p2x = line_0y[avatar.pos_x + 2 * delta_x_y[0]]
@@ -200,9 +212,6 @@ def draw_labyrinthe(laby, avatar):
                     picture_redim = pygame.transform.scale(picture, (1600, 900))
                     screen.blit(picture_redim, (0, 0))
 
-        # picture = pygame.image.load(f"img/ombrage1.png")
-        # screen.blit(picture, (0, 0))
-
         case_0y_p2x = line_0y[avatar.pos_x + delta_x_y[0]]
         for element in case_0y_p2x:
             if element != '':
@@ -227,6 +236,7 @@ def draw_labyrinthe(laby, avatar):
                     picture_redim = pygame.transform.scale(picture, (1600, 900))
                     screen.blit(picture_redim, (0, 0))
 
+    # If player is looking left
     if delta_x_y == [-1, 0]:
 
         case_0y_p2x = line_0y[avatar.pos_x + 2 * delta_x_y[0]]
@@ -256,9 +266,6 @@ def draw_labyrinthe(laby, avatar):
                     picture = pygame.image.load(f"img/{element}-2g.png")
                     picture_redim = pygame.transform.scale(picture, (1600, 900))
                     screen.blit(picture_redim, (0, 0))
-
-        # picture = pygame.image.load(f"img/ombrage1.png")
-        # screen.blit(picture, (0, 0))
 
         case_0y_p2x = line_0y[avatar.pos_x + delta_x_y[0]]
         for element in case_0y_p2x:
@@ -295,9 +302,15 @@ def draw_labyrinthe(laby, avatar):
 
 
 def move(delta_x_y):
+    '''Call the player's method move
+
+    Parameters :
+        delta_x_y
+
+    Return :
+        New position of the player
+    '''
     avatar.move2(delta_x_y[0], delta_x_y[1], laby)
-    # pygame.mixer.Channel(1).load('sfx/footsteps.mp3')
-    # pygame.mixer.Channel(1).play()
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('sfx/footsteps.mp3'))
 
 
