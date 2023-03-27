@@ -1,0 +1,7 @@
+# screen constant
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
+
+# arrow constant
+ARROW_WIDTH = 164
+ARROW_HEIGHT = 116

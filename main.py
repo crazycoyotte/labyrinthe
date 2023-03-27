@@ -1,6 +1,7 @@
 import pygame
 import player
 import labyrinthe
+import constant
 
 # declaration variables
 delta_x_y = [1, 0]
@@ -9,14 +10,17 @@ delta_x_y = [1, 0]
 pygame.init()
 
 # Création de la fenêtre principale
-window_size = (1600, 900)
+window_size = (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT)
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Labyrinthe")
 
 # Define click zone
-turn_left_zone = pygame.Rect(0, 0, 400, 900)
-turn_right_zone = pygame.Rect(900, 0, 800, 900)
-go_straight_zone = pygame.Rect(400, 0, 800, 900)
+turn_left_zone = pygame.Rect(((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WIDTH / 2)) - constant.ARROW_WIDTH,
+                             (4 * constant.SCREEN_HEIGHT / 5), constant.ARROW_WIDTH, constant.ARROW_HEIGHT)
+turn_right_zone = pygame.Rect(((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WIDTH / 2)) + constant.ARROW_WIDTH,
+                              (4 * constant.SCREEN_HEIGHT / 5), constant.ARROW_WIDTH, constant.ARROW_HEIGHT)
+go_straight_zone = pygame.Rect(((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WIDTH / 2)),
+                               (4 * constant.SCREEN_HEIGHT / 5), constant.ARROW_WIDTH, constant.ARROW_HEIGHT)
 
 # instanciation du joueur et du labyrinthe
 avatar = player.Player()
@@ -35,6 +39,7 @@ font = pygame.font.SysFont(None, 40)
 
 # Son d'ambiance
 pygame.mixer.Channel(0).play(pygame.mixer.Sound('sfx/Cave.mp3'))
+
 
 def draw_text(text, color, x, y):
     '''TO DO : remove'''
@@ -55,7 +60,7 @@ def draw_labyrinthe(laby, avatar):
 
     # Variables
     picture = pygame.image.load("img/base.png")
-    picture_redim = pygame.transform.scale(picture, (1600, 900))
+    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
     screen.blit(picture_redim, (0, 0))
 
     # Loading the lines over and above the player
@@ -73,11 +78,11 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element == '0':
                     picture = pygame.image.load(f"img/{element}-3c.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
                 else:
                     picture = pygame.image.load(f"img/{element}-3m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_p1y_m1x = line_p1y[avatar.pos_x - 1]
@@ -85,7 +90,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_p1y_p1x = line_p1y[avatar.pos_x + 1]
@@ -93,7 +98,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         # picture = pygame.image.load(f"img/ombrage1.png")
@@ -104,7 +109,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_0y_p1x = line_0y[avatar.pos_x + 1]
@@ -112,7 +117,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_0y_m1x = line_0y[avatar.pos_x - 1]
@@ -120,7 +125,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
     # If player is looking down
@@ -131,11 +136,11 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element == '0':
                     picture = pygame.image.load(f"img/{element}-3c.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
                 else:
                     picture = pygame.image.load(f"img/{element}-3m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_m1y_m1x = line_m1y[avatar.pos_x + 1]
@@ -143,7 +148,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_m1y_p1x = line_m1y[avatar.pos_x - 1]
@@ -151,7 +156,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         # picture = pygame.image.load(f"img/ombrage1.png")
@@ -162,7 +167,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_0y_p1x = line_0y[avatar.pos_x - 1]
@@ -170,7 +175,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_0y_m1x = line_0y[avatar.pos_x + 1]
@@ -178,7 +183,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
     # If player is looking right
@@ -189,11 +194,11 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element == '0':
                     picture = pygame.image.load(f"img/{element}-3c.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
                 else:
                     picture = pygame.image.load(f"img/{element}-3m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_m1y_p1x = line_m1y[avatar.pos_x + delta_x_y[0]]
@@ -201,7 +206,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_p1y_p1x = line_p1y[avatar.pos_x + delta_x_y[0]]
@@ -209,7 +214,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_0y_p2x = line_0y[avatar.pos_x + delta_x_y[0]]
@@ -217,7 +222,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_m1y_x = line_m1y[avatar.pos_x]
@@ -225,7 +230,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_p1y_x = line_p1y[avatar.pos_x]
@@ -233,7 +238,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
     # If player is looking left
@@ -244,11 +249,11 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element == '0':
                     picture = pygame.image.load(f"img/{element}-3c.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
                 else:
                     picture = pygame.image.load(f"img/{element}-3m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_m1y_p1x = line_m1y[avatar.pos_x + delta_x_y[0]]
@@ -256,7 +261,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_p1y_p1x = line_p1y[avatar.pos_x + delta_x_y[0]]
@@ -264,7 +269,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_0y_p2x = line_0y[avatar.pos_x + delta_x_y[0]]
@@ -272,7 +277,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-2m.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_m1y_x = line_m1y[avatar.pos_x]
@@ -280,7 +285,7 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1d.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
         case_p1y_x = line_p1y[avatar.pos_x]
@@ -288,16 +293,26 @@ def draw_labyrinthe(laby, avatar):
             if element != '':
                 if element != '0':
                     picture = pygame.image.load(f"img/{element}-1g.png")
-                    picture_redim = pygame.transform.scale(picture, (1600, 900))
+                    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
                     screen.blit(picture_redim, (0, 0))
 
     picture = pygame.image.load(f"img/ombrage1.png")
-    picture_redim = pygame.transform.scale(picture, (1600, 900))
+    picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
     screen.blit(picture_redim, (0, 0))
+
+    # Moving arrows
+    arrow = pygame.image.load("img/arrow-straight.png")
+    screen.blit(arrow, ((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WIDTH / 2), (4 * constant.SCREEN_HEIGHT / 5)))
+    arrow = pygame.image.load("img/arrow-left.png")
+    screen.blit(arrow, (((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WIDTH / 2)) - constant.ARROW_WIDTH,
+                        (4 * constant.SCREEN_HEIGHT / 5)))
+    arrow = pygame.image.load("img/arrow-right.png")
+    screen.blit(arrow, (((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WIDTH / 2)) + constant.ARROW_WIDTH,
+                        (4 * constant.SCREEN_HEIGHT / 5)))
 
     if avatar.victory:
         victoire_img = pygame.image.load("img/victoire.jpg")
-        victoire_redim = pygame.transform.scale(victoire_img, (1600, 900))
+        victoire_redim = pygame.transform.scale(victoire_img, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
         screen.blit(victoire_redim, (0, 0))
 
 
@@ -348,7 +363,8 @@ while running:
                     delta_x_y = [0, 1]
                 elif delta_x_y == [0, 1]:
                     delta_x_y = [1, 0]
-            if turn_right_zone.collidepoint(mouse_x, mouse_y) and left_click:
+            if turn_right_zone.collidepoint(mouse_x, mouse_y):
+                print("right")
                 if delta_x_y == [1, 0]:
                     delta_x_y = [0, 1]
                 elif delta_x_y == [0, 1]:
