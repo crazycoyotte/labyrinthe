@@ -4,7 +4,7 @@ import labyrinthe
 import constant
 
 # declaration variables
-delta_x_y = [1, 0]
+delta_x_y = [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]
 
 # Initialisation de Pygame
 pygame.init()
@@ -26,13 +26,6 @@ go_straight_zone = pygame.Rect(((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WI
 avatar = player.Player()
 laby = labyrinthe.Labyrinthe()
 
-# instanciation du labyrinthe
-# laby = labyrinthe.Labyrinthe()
-
-# Couleurs
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
 
 # Polices de caractères
 font = pygame.font.SysFont(None, 40)
@@ -58,7 +51,6 @@ def draw_labyrinthe(laby, avatar):
         View of the labyrinth from the players point of view
     '''
 
-    # Variables
     picture = pygame.image.load("img/base.png")
     picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
     screen.blit(picture_redim, (0, 0))
@@ -71,7 +63,7 @@ def draw_labyrinthe(laby, avatar):
     line_p2y = laby.structure[avatar.pos_y + 2]
 
     # If player is looking up
-    if delta_x_y == [0, 1]:
+    if delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_DOWN]:
 
         case_p2y_0 = line_p2y[avatar.pos_x]
         for element in case_p2y_0:
@@ -102,7 +94,7 @@ def draw_labyrinthe(laby, avatar):
                     screen.blit(picture_redim, (0, 0))
 
         # picture = pygame.image.load(f"img/ombrage1.png")
-        # screen.blit(picture, (0, 0))
+        # screen.blit(picture, (0, constant.MOVE_HORIZONTALY))
 
         case_p1y_0x = line_p1y[avatar.pos_x]
         for element in case_p1y_0x:
@@ -129,7 +121,7 @@ def draw_labyrinthe(laby, avatar):
                     screen.blit(picture_redim, (0, 0))
 
     # If player is looking down
-    if delta_x_y == [0, -1]:
+    if delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_UP]:
 
         case_m2y_0 = line_m2y[avatar.pos_x]
         for element in case_m2y_0:
@@ -160,7 +152,7 @@ def draw_labyrinthe(laby, avatar):
                     screen.blit(picture_redim, (0, 0))
 
         # picture = pygame.image.load(f"img/ombrage1.png")
-        # screen.blit(picture, (0, 0))
+        # screen.blit(picture, (0, constant.MOVE_HORIZONTALY))
 
         case_m1y_0x = line_m1y[avatar.pos_x]
         for element in case_m1y_0x:
@@ -187,7 +179,7 @@ def draw_labyrinthe(laby, avatar):
                     screen.blit(picture_redim, (0, 0))
 
     # If player is looking right
-    if delta_x_y == [1, 0]:
+    if delta_x_y == [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]:
 
         case_0y_p2x = line_0y[avatar.pos_x + 2 * delta_x_y[0]]
         for element in case_0y_p2x:
@@ -242,7 +234,7 @@ def draw_labyrinthe(laby, avatar):
                     screen.blit(picture_redim, (0, 0))
 
     # If player is looking left
-    if delta_x_y == [-1, 0]:
+    if delta_x_y == [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]:
 
         case_0y_p2x = line_0y[avatar.pos_x + 2 * delta_x_y[0]]
         for element in case_0y_p2x:
@@ -350,29 +342,29 @@ while running:
 
         # Get left click
         left_click, middle_click, right_click = pygame.mouse.get_pressed()
-        if left_click and left_click_pressed == False:
+        if (left_click and left_click_pressed == False):
             if go_straight_zone.collidepoint(mouse_x, mouse_y):
                 move(delta_x_y)
                 print("straight")
             if turn_left_zone.collidepoint(mouse_x, mouse_y):
-                if delta_x_y == [1, 0]:
-                    delta_x_y = [0, -1]
-                elif delta_x_y == [0, -1]:
-                    delta_x_y = [-1, 0]
-                elif delta_x_y == [-1, 0]:
-                    delta_x_y = [0, 1]
-                elif delta_x_y == [0, 1]:
-                    delta_x_y = [1, 0]
+                if delta_x_y == [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]:
+                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_DOWN]
+                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_DOWN]:
+                    delta_x_y = [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]
+                elif delta_x_y == [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]:
+                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_UP]
+                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_UP]:
+                    delta_x_y = [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]
             if turn_right_zone.collidepoint(mouse_x, mouse_y):
                 print("right")
-                if delta_x_y == [1, 0]:
-                    delta_x_y = [0, 1]
-                elif delta_x_y == [0, 1]:
-                    delta_x_y = [-1, 0]
-                elif delta_x_y == [-1, 0]:
-                    delta_x_y = [0, -1]
-                elif delta_x_y == [0, -1]:
-                    delta_x_y = [1, 0]
+                if delta_x_y == [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]:
+                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_UP]
+                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_UP]:
+                    delta_x_y = [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]
+                elif delta_x_y == [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]:
+                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_DOWN]
+                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_DOWN]:
+                    delta_x_y = [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]
             left_click_pressed = True
         else:
             left_click_pressed = False
