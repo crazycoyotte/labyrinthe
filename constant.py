@@ -16,5 +16,9 @@ MOVE_DOWN = 1
 
 # Coulors
 WHITE = (255, 255, 255)
-BLACK = (0, constant.MOVE_HORIZONTALY, constant.MOVE_HORIZONTALY)
-GREEN = (0, 255, constant.MOVE_HORIZONTALY)
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+
+# Path
+SOUND = "sfx/"
+IMG = "img/"
