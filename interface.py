@@ -7,8 +7,8 @@ def draw_labyrinthe(laby, avatar, screen, delta_x_y):
     '''Manage the view
 
     Parameters :
-        laby -> the Labyrinth object
-        avatar -> the player object
+        laby -> the Labyrinth object, created in main line 30
+        avatar -> the player object, created in main line 30
 
     Returns :
         View of the labyrinth from the players point of view
@@ -18,6 +18,13 @@ def draw_labyrinthe(laby, avatar, screen, delta_x_y):
     picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
     screen.blit(picture_redim, (0, 0))
 
+    # if player is moving horizontally
+    # facing to the right
+    if delta_x_y == (constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY):
+        cell_xp2_y0 = laby.get_cell_by_xy(avatar.pos_x, avatar.pos_y) # pourquoi laby ne semble pas être l'objet passé en paramètre ?
+
+
+    """ old version
     # Loading the lines over and above the player
     line_0y = laby.structure[avatar.pos_y]
     line_m1y = laby.structure[avatar.pos_y - 1]
@@ -249,7 +256,7 @@ def draw_labyrinthe(laby, avatar, screen, delta_x_y):
                 if element != '0':
                     picture = pygame.image.load(f"{constant.IMG}{element}-1g.png")
                     picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
-                    screen.blit(picture_redim, (0, 0))
+                    screen.blit(picture_redim, (0, 0))"""
 
     picture = pygame.image.load(f"{constant.IMG}ombrage1.png")
     picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))

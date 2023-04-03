@@ -1,5 +1,6 @@
 import pygame
 import interface
+import map
 import player
 import labyrinthe
 import constant
@@ -25,7 +26,8 @@ go_straight_zone = pygame.Rect(((constant.SCREEN_WIDTH / 2) - (constant.ARROW_WI
 
 # instanciation du joueur et du labyrinthe
 avatar = player.Player()
-laby = labyrinthe.Labyrinthe()
+# laby = labyrinthe.Labyrinthe()
+laby = map.Map(f"{constant.MAPS}level1.xls") # Creation du labyrinthe
 
 # Polices de caractères
 font = pygame.font.SysFont(None, 40)

@@ -22,3 +22,4 @@ GREEN = (0, 255, 0)
 # Path
 SOUND = "sfx/"
 IMG = "img/"
+MAPS = "maps/"
