@@ -8,7 +8,7 @@ def draw_labyrinthe(laby, avatar, screen, delta_x_y):
 
     Parameters :
         laby -> the Labyrinth object, created in main line 30
-        avatar -> the player object, created in main line 30
+        avatar -> the player object, created in main line 28
 
     Returns :
         View of the labyrinth from the players point of view
@@ -21,7 +21,37 @@ def draw_labyrinthe(laby, avatar, screen, delta_x_y):
     # if player is moving horizontally
     # facing to the right
     if delta_x_y == (constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY):
-        cell_xp2_y0 = laby.get_cell_by_xy(avatar.pos_x, avatar.pos_y) # pourquoi laby ne semble pas être l'objet passé en paramètre ?
+        cell_xp2_y0 = laby.get_cell_by_xy(avatar.pos_x + 2, avatar.pos_y) # pourquoi laby ne semble pas être l'objet passé en paramètre ?
+        if cell_xp2_y0.sprite != "":
+            picture = pygame.image.load(f"{constant.IMG}{cell_xp2_y0.sprite}-3c.png")
+            picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
+            screen.blit(picture_redim, (0, 0))
+        if cell_xp2_y0.deco != "":
+            picture = pygame.image.load(f"{constant.IMG}{cell_xp2_y0.deco}-3c.png")
+            picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
+            screen.blit(picture_redim, (0, 0))
+
+        cell_xp1_yp1 = laby.get_cell_by_xy(avatar.pos_x + 1,
+                                          avatar.pos_y + 1)  # pourquoi laby ne semble pas être l'objet passé en paramètre ?
+        if cell_xp1_yp1.sprite != "":
+            picture = pygame.image.load(f"{constant.IMG}{cell_xp1_yp1.sprite}-3c.png")
+            picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
+            screen.blit(picture_redim, (0, 0))
+        if cell_xp1_yp1.deco != "":
+            picture = pygame.image.load(f"{constant.IMG}{cell_xp1_yp1.deco}-3c.png")
+            picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
+            screen.blit(picture_redim, (0, 0))
+
+        cell_xp1_ym1 = laby.get_cell_by_xy(avatar.pos_x + 1,
+                                          avatar.pos_y - 1)  # pourquoi laby ne semble pas être l'objet passé en paramètre ?
+        if cell_xp1_ym1.sprite != "":
+            picture = pygame.image.load(f"{constant.IMG}{cell_xp1_ym1.sprite}-3c.png")
+            picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
+            screen.blit(picture_redim, (0, 0))
+        if cell_xp1_yp1.deco != "":
+            picture = pygame.image.load(f"{constant.IMG}{cell_xp1_ym1.deco}-3c.png")
+            picture_redim = pygame.transform.scale(picture, (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
+            screen.blit(picture_redim, (0, 0))
 
 
     """ old version
