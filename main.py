@@ -6,7 +6,7 @@ import labyrinthe
 import constant
 
 # declaration variables
-delta_x_y = [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]
+delta_x_y = (constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY)
 
 # Initialisation de Pygame
 pygame.init()
@@ -46,7 +46,6 @@ interface.draw_labyrinthe(laby, avatar, screen, delta_x_y)
 # Mise à jour de l'affichage
 pygame.display.flip()
 
-left_click_pressed = False
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -56,40 +55,39 @@ while running:
 
         # Get left click
         left_click, middle_click, right_click = pygame.mouse.get_pressed()
-        if left_click and left_click_pressed == False:
+        if left_click:
             if go_straight_zone.collidepoint(mouse_x, mouse_y):
                 avatar.move2(delta_x_y[0], delta_x_y[1], laby)
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound(f'{constant.SOUND}footsteps.mp3'))
             if turn_left_zone.collidepoint(mouse_x, mouse_y):
-                if delta_x_y == [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]:
-                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_DOWN]
-                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_DOWN]:
-                    delta_x_y = [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]
-                elif delta_x_y == [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]:
-                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_UP]
-                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_UP]:
-                    delta_x_y = [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]
+                if delta_x_y == (constant.MOVE_LEFT, constant.MOVE_HORIZONTALY):
+                    delta_x_y = (constant.MOVE_VERTICALY, constant.MOVE_DOWN)
+                elif delta_x_y == (constant.MOVE_VERTICALY, constant.MOVE_DOWN):
+                    delta_x_y = (constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY)
+                elif delta_x_y == (constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY):
+                    delta_x_y = (constant.MOVE_VERTICALY, constant.MOVE_UP)
+                elif delta_x_y == (constant.MOVE_VERTICALY, constant.MOVE_UP):
+                    delta_x_y = (constant.MOVE_LEFT, constant.MOVE_HORIZONTALY)
             if turn_right_zone.collidepoint(mouse_x, mouse_y):
-                if delta_x_y == [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]:
-                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_UP]
-                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_UP]:
-                    delta_x_y = [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]
-                elif delta_x_y == [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]:
-                    delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_DOWN]
-                elif delta_x_y == [constant.MOVE_VERTICALY, constant.MOVE_DOWN]:
-                    delta_x_y = [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]
-            left_click_pressed = True
-        else:
-            left_click_pressed = False
+                if delta_x_y == (constant.MOVE_LEFT, constant.MOVE_HORIZONTALY):
+                    delta_x_y = (constant.MOVE_VERTICALY, constant.MOVE_UP)
+                elif delta_x_y == (constant.MOVE_VERTICALY, constant.MOVE_UP):
+                    delta_x_y = (constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY)
+                elif delta_x_y == (constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY):
+                    delta_x_y = (constant.MOVE_VERTICALY, constant.MOVE_DOWN)
+                elif delta_x_y == (constant.MOVE_VERTICALY, constant.MOVE_DOWN):
+                    delta_x_y = (constant.MOVE_LEFT, constant.MOVE_HORIZONTALY)
+            # Effacement de l'écran
+            screen.fill(constant.WHITE)
 
-        # Effacement de l'écran
-        screen.fill(constant.WHITE)
+            # Affichage du labyrinthe
+            interface.draw_labyrinthe(laby, avatar, screen, delta_x_y)
 
-        # Affichage du labyrinthe
-        interface.draw_labyrinthe(laby, avatar, screen, delta_x_y)
+            # Mise à jour de l'affichage
+            pygame.display.flip()
 
-        # Mise à jour de l'affichage
-        pygame.display.flip()
+
+
 
 # Fermeture de Pygame
 pygame.quit()

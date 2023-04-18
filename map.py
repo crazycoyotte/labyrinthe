@@ -22,7 +22,7 @@ class Map:
             for x in range(self.cols):
                 cell_value = sheet.cell_value(y, x)
                 element = cell_value.split(",")
-                print(x, y, cell_value)
+                # print(x, y, cell_value)
                 self.case = case.Case(x, y, element[0], element[1])
                 self.actual_map.append(self.case)
 
