@@ -9,6 +9,7 @@ delta_x_y = [constant.MOVE_RIGHT, constant.MOVE_HORIZONTALY]
 
 # Initialisation de Pygame
 pygame.init()
+pygame.mixer.init()
 
 # Création de la fenêtre principale
 window_size = (constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT)
@@ -31,7 +32,9 @@ laby = labyrinthe.Labyrinthe()
 font = pygame.font.SysFont(None, 40)
 
 # Son d'ambiance
-pygame.mixer.Channel(0).play(pygame.mixer.Sound(f'{constant.SOUND}Cave.mp3'))
+pygame.mixer.music.load(f'{constant.SOUND}Cave2.mp3')
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
 
 # Boucle de jeu
 running = True
@@ -57,7 +60,7 @@ while running:
         if left_click and left_click_pressed == False:
             if go_straight_zone.collidepoint(mouse_x, mouse_y):
                 avatar.move2(delta_x_y[0], delta_x_y[1], laby)
-                pygame.mixer.Channel(1).play(pygame.mixer.Sound(f'{constant.SOUND}footsteps.mp3'))
+                pygame.mixer.Channel(1).play(pygame.mixer.Sound(f'{constant.SOUND}footsteps.wav'))
             if turn_left_zone.collidepoint(mouse_x, mouse_y):
                 if delta_x_y == [constant.MOVE_LEFT, constant.MOVE_HORIZONTALY]:
                     delta_x_y = [constant.MOVE_VERTICALY, constant.MOVE_DOWN]

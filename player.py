@@ -27,7 +27,7 @@ class Player:
         case_0y_m1x = line_0y[self.pos_x - 1]
         case_m1y_0x = line_m1y[self.pos_x]
         case_p1y_0x = line_p1y[self.pos_x]
-        print(player_line[self.pos_x + delta_x])
+        # print(player_line[self.pos_x + delta_x])
 
         if delta_x == 1 and case_0y_p1x[0] == "0":
             move = True
